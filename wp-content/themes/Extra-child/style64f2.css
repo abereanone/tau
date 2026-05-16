@@ -9,6 +9,18 @@
 
 /* You can add custom CSS below if needed */
 
+/* Prevent horizontal overflow from triggering mobile browser zoom-out */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Constrain all images and media to their container width */
+img, video, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Neutralize the sticky wrapper — #main-header is fully fixed, wrapper is redundant */
 #main-header-wrapper {
   position: relative !important;
@@ -27,8 +39,15 @@
 }
 
 /* Push page content down so it doesn't hide under the fixed header */
-.et_fixed_nav #main-content {
-  padding-top: 100px !important;
+@media only screen and (min-width: 768px) {
+  .et_fixed_nav #main-content {
+    padding-top: 100px !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .et_fixed_nav #main-content {
+    padding-top: 70px !important;
+  }
 }
 
 /* Keep logo visible at all times */
@@ -63,15 +82,22 @@
   }
 }
 
-/* Nav text — same size in both normal and fixed/scrolled state */
-#et-menu li,
-.et-fixed-header #et-menu li a {
-  font-size: 18px !important;
+/* Nav text — desktop only */
+@media only screen and (min-width: 768px) {
+  #et-menu li,
+  .et-fixed-header #et-menu li a {
+    font-size: 18px !important;
+  }
 }
 
-/* Vertically center the search box within the nav row */
+/* Vertically center the search box within the nav row; hide on mobile */
 .tau-search-item {
   align-self: center !important;
+}
+@media only screen and (max-width: 767px) {
+  .tau-search-item {
+    display: none !important;
+  }
 }
 /* === TAU Sermons Layout === */
 .tau-sermons {
@@ -205,5 +231,40 @@
   }
   .tau-series-image img {
     max-width: 100%;
+  }
+}
+
+/* Mobile menu: drop below fixed header, start hidden */
+.et_mobile_menu {
+  top: 100% !important;
+  z-index: 100000 !important;
+}
+#et-mobile-navigation nav {
+  display: none;
+}
+
+/* Remove negative gutter margins that cause row overflow on mobile */
+@media only screen and (max-width: 767px) {
+  .et_pb_row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Force single-column masonry on mobile */
+@media only screen and (max-width: 767px) {
+  .posts-blog-feed-module .paginated_page[data-columns]::before,
+  [data-columns]::before {
+    content: "1 .column.size-1of1" !important;
+  }
+  .column.size-1of1,
+  .column.size-1of2,
+  .column.size-1of3 {
+    width: 100% !important;
+    max-width: 100% !important;
+    float: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
   }
 }
