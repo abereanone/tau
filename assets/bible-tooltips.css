@@ -1,0 +1,50 @@
+.bible-ref {
+  color: #7b1d1d;
+  cursor: help;
+  border-bottom: 1px dotted currentColor;
+  text-decoration: none;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.bible-ref:hover,
+.bible-ref:focus-visible {
+  color: #4e1111;
+  border-bottom-style: solid;
+  outline: none;
+}
+
+.bible-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 99999;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 14px 16px;
+  border: 1px solid rgba(123, 29, 29, 0.24);
+  border-top: 4px solid #7b1d1d;
+  border-radius: 10px;
+  background: rgba(255, 245, 244, 0.98);
+  color: #2c1f1f;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.bible-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 24px;
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent rgba(255, 245, 244, 0.98) transparent;
+}
+
+.bible-tooltip a {
+  color: #7b1d1d;
+  text-decoration: underline;
+}
+
+.bible-tooltip a:hover,
+.bible-tooltip a:focus-visible {
+  color: #4e1111;
+}
