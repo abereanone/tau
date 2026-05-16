@@ -1,0 +1,144 @@
+/*
+ Theme Name:   Extra-Child Theme made by Michael
+ Theme URI:    https://thingsabove.us
+ Description:  Child theme for Your Parent Theme
+ Author:       Michael Coughlin
+ Template:     Extra
+ Version:      1.0
+*/
+
+/* You can add custom CSS below if needed */
+/* === TAU Sermons Layout === */
+.tau-sermons {
+  max-width: 960px;
+  margin: 0 auto 2rem;
+}
+
+.tau-sermons-intro {
+  margin-bottom: 1.5rem;
+}
+
+.tau-sermons-intro h2 {
+  margin-bottom: 0.5rem;
+}
+
+.tau-series-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.tau-series-image {
+  flex: 0 0 160px;
+}
+
+.tau-series-image img {
+  display: block;
+  width: 100%;
+  max-width: 160px;
+  border-radius: 4px;
+}
+
+.tau-series-main {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.tau-series-main h3 {
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+}
+
+.tau-series-meta {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.35rem;
+}
+
+.tau-series-description {
+  margin-bottom: 0.6rem;
+}
+
+.tau-series-buttons-primary,
+.tau-series-buttons-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.tau-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tau-btn span.tau-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Primary / app buttons */
+.tau-btn-primary {
+  background: #0073aa;
+  border-color: #0073aa;
+  color: #fff !important;
+}
+
+.tau-btn-primary:hover {
+  background: #005c87;
+  border-color: #005c87;
+}
+
+.tau-btn-apple { background: #000; border-color: #000; color: #fff !important; }
+.tau-btn-apple:hover { background: #333; border-color: #333; }
+
+.tau-btn-spotify { background: #1db954; border-color: #1db954; color: #fff !important; }
+.tau-btn-spotify:hover { background: #169442; border-color: #169442; }
+
+.tau-btn-overcast { background: #ff8c00; border-color: #ff8c00; color: #fff !important; }
+.tau-btn-overcast:hover { background: #e57c00; border-color: #e57c00; }
+
+.tau-btn-pocketcasts { background: #f43f5e; border-color: #f43f5e; color: #fff !important; }
+.tau-btn-pocketcasts:hover { background: #e11d48; border-color: #e11d48; }
+
+/* Ghost / utility buttons */
+.tau-btn-ghost {
+  background: #f5f5f5;
+  border-color: #ddd;
+  color: #333 !important;
+}
+
+.tau-btn-ghost:hover {
+  background: #eaeaea;
+}
+
+.tau-series-footer-note {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+@media (max-width: 640px) {
+  .tau-series-card {
+    padding: 0.75rem 0.9rem;
+  }
+  .tau-series-image {
+    flex: 0 0 100%;
+  }
+  .tau-series-image img {
+    max-width: 100%;
+  }
+}
