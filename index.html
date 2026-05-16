@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <!--[if IE 6]>
 <html id="ie6" lang="en-US">
 <![endif]-->
@@ -2818,6 +2818,7 @@
     />
 
     <link rel="stylesheet" href="assets/bible-tooltips.css" />
+  <style id="tau-mods">#main-header-wrapper{position:sticky!important;top:0!important;z-index:99999!important;}</style>
   </head>
   <body
     class="home blog wp-theme-Extra wp-child-theme-Extra-child et_extra et_extra_layout et_fixed_nav et_fixed_nav_hide_logo_image et_smooth_scroll et_pb_gutters4 et_primary_nav_dropdown_animation_Default et_secondary_nav_dropdown_animation_Default et_includes_sidebar et-db"
@@ -2845,6 +2846,11 @@
               <!-- ET Navigation -->
               <div id="et-navigation">
                 <ul id="et-menu" class="nav">
+                  <li
+                    class="menu-item menu-item-type-custom menu-item-object-custom"
+                  >
+                    <a href="index.html">Home</a>
+                  </li>
                   <li
                     id="menu-item-14772"
                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-14772"
@@ -2880,6 +2886,16 @@
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14778"
                       >
                         <a href="our-tract/index.html">Our Tract</a>
+                      </li>
+                      <li
+                        id="menu-item-16541"
+                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16541"
+                      >
+                        <a
+                          href="https://heritagerestored.org/resources/"
+                          target="_blank"
+                          >Abolition Resources</a
+                        >
                       </li>
                     </ul>
                   </li>
@@ -2932,16 +2948,6 @@
                     >
                   </li>
                   <li
-                    id="menu-item-16541"
-                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16541"
-                  >
-                    <a
-                      href="https://heritagerestored.org/resources/"
-                      target="_blank"
-                      >Abolition Resources</a
-                    >
-                  </li>
-                  <li
                     id="menu-item-14775"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14775"
                   >
@@ -2949,7 +2955,12 @@
                       >Evangelio de Cristo</a
                     >
                   </li>
-                </ul>
+                  <li class="menu-item tau-search-item" style="display:flex;align-items:center;">
+                    <form style="display:flex;align-items:center;margin:0;" onsubmit="window.open('https://www.google.com/search?q=site%3Athingsabove.us+'+encodeURIComponent(this.querySelector('input').value),'_blank');return false;">
+                      <input type="search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
+                      <button type="submit" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
+                    </form>
+                  </li>                </ul>
                 <div id="et-mobile-navigation">
                   <span class="show-menu">
                     <div class="show-menu-button">
@@ -6211,179 +6222,89 @@
                       /></span>
 
                       <ul class="pagination">
-                        <li class="prev arrow">
-                          <a class="prev arrow" href="#"></a>
+                        <li class="prev static-arrow">
+                          <a class="prev static-arrow" href="all-posts.html#p=1"></a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-1"
-                            data-page="1"
-                            >1</a
-                          >
+                          <a href="all-posts.html#p=1" class="static-pagination-page pagination-page-1" data-page="1">1</a>
                         </li>
                         <li class="ellipsis front">
-                          <a class="ellipsis" href="#">...</a>
+                          <a class="ellipsis" href="all-posts.html#p=1">...</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-2"
-                            data-page="2"
-                            >2</a
-                          >
+                          <a href="all-posts.html#p=2" class="static-pagination-page pagination-page-2" data-page="2">2</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-3"
-                            data-page="3"
-                            >3</a
-                          >
+                          <a href="all-posts.html#p=3" class="static-pagination-page pagination-page-3" data-page="3">3</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-4"
-                            data-page="4"
-                            >4</a
-                          >
+                          <a href="all-posts.html#p=4" class="static-pagination-page pagination-page-4" data-page="4">4</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-5"
-                            data-page="5"
-                            >5</a
-                          >
+                          <a href="all-posts.html#p=5" class="static-pagination-page pagination-page-5" data-page="5">5</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-6"
-                            data-page="6"
-                            >6</a
-                          >
+                          <a href="all-posts.html#p=6" class="static-pagination-page pagination-page-6" data-page="6">6</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-7"
-                            data-page="7"
-                            >7</a
-                          >
+                          <a href="all-posts.html#p=7" class="static-pagination-page pagination-page-7" data-page="7">7</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-8"
-                            data-page="8"
-                            >8</a
-                          >
+                          <a href="all-posts.html#p=8" class="static-pagination-page pagination-page-8" data-page="8">8</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-9"
-                            data-page="9"
-                            >9</a
-                          >
+                          <a href="all-posts.html#p=9" class="static-pagination-page pagination-page-9" data-page="9">9</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-10"
-                            data-page="10"
-                            >10</a
-                          >
+                          <a href="all-posts.html#p=10" class="static-pagination-page pagination-page-10" data-page="10">10</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-11"
-                            data-page="11"
-                            >11</a
-                          >
+                          <a href="all-posts.html#p=11" class="static-pagination-page pagination-page-11" data-page="11">11</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-12"
-                            data-page="12"
-                            >12</a
-                          >
+                          <a href="all-posts.html#p=12" class="static-pagination-page pagination-page-12" data-page="12">12</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-13"
-                            data-page="13"
-                            >13</a
-                          >
+                          <a href="all-posts.html#p=13" class="static-pagination-page pagination-page-13" data-page="13">13</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-14"
-                            data-page="14"
-                            >14</a
-                          >
+                          <a href="all-posts.html#p=14" class="static-pagination-page pagination-page-14" data-page="14">14</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-15"
-                            data-page="15"
-                            >15</a
-                          >
+                          <a href="all-posts.html#p=15" class="static-pagination-page pagination-page-15" data-page="15">15</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-16"
-                            data-page="16"
-                            >16</a
-                          >
+                          <a href="all-posts.html#p=16" class="static-pagination-page pagination-page-16" data-page="16">16</a>
                         </li>
 
                         <li class="">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-17"
-                            data-page="17"
-                            >17</a
-                          >
+                          <a href="all-posts.html#p=17" class="static-pagination-page pagination-page-17" data-page="17">17</a>
                         </li>
                         <li class="ellipsis back">
-                          <a class="ellipsis" href="#">...</a>
+                          <a class="ellipsis" href="all-posts.html#p=18">...</a>
                         </li>
 
                         <li class="last">
-                          <a
-                            href="#"
-                            class="pagination-page pagination-page-18"
-                            data-page="18"
-                            >18</a
-                          >
+                          <a href="all-posts.html#p=18" class="static-pagination-page pagination-page-18" data-page="18">18</a>
                         </li>
-                        <li class="next arrow">
-                          <a class="next arrow" href="#"></a>
+                        <li class="next static-arrow">
+                          <a class="next static-arrow" href="all-posts.html#p=2"></a>
                         </li>
                       </ul>
                     </div>
@@ -6529,6 +6450,7 @@
 
       gtag("config", "G-619PHWL06F");
     </script>
+    <script src="assets/force-pagination.js"></script>
     <script
       type="text/javascript"
       src="wp-includes/js/masonry.min3a05.js"
@@ -6628,11 +6550,8 @@
       //# sourceURL=extra-scripts-js-extra
       /* ]]> */
     </script>
-    <script
-      type="text/javascript"
-      src="wp-content/themes/Extra/scripts/scripts.min64f2.js"
-      id="extra-scripts-js"
-    ></script>
+    <!-- Extra theme JS disabled for static site to prevent pagination rewrite -->
+    <script src="assets/fix-pagination.js"></script>
     <script
       type="text/javascript"
       src="wp-content/themes/Extra/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids64f2.js"

@@ -8,6 +8,71 @@
 */
 
 /* You can add custom CSS below if needed */
+
+/* Neutralize the sticky wrapper — #main-header is fully fixed, wrapper is redundant */
+#main-header-wrapper {
+  position: relative !important;
+}
+
+/* Always fix header at top — don't wait for JS to add et-fixed-header class */
+.et_fixed_nav #main-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  z-index: 99999 !important;
+}
+
+/* Push page content down so it doesn't hide under the fixed header */
+.et_fixed_nav #main-content {
+  padding-top: 100px !important;
+}
+
+/* Keep logo visible at all times */
+.et_fixed_nav_hide_logo_image .logo,
+.et_fixed_nav_hide_logo_image .et-fixed-header .logo {
+  opacity: 1 !important;
+}
+
+/* Taller header stripe: 100px (was 80px) */
+@media only screen and (min-width: 768px) {
+  #main-header .logo {
+    height: 82px !important;
+    width: auto !important;
+    margin: 9px 0 !important;
+    flex-shrink: 0 !important;
+  }
+  #main-header .logo img {
+    height: 82px !important;
+    width: auto !important;
+  }
+  .header.left-right #et-navigation > ul > li > a {
+    padding-bottom: 50px !important;
+  }
+  /* Fixed/scrolled header: same size as normal — no shrinking */
+  .et-fixed-header #main-header .logo {
+    height: 82px !important;
+    width: auto !important;
+    margin: 9px 0 !important;
+  }
+  .et-fixed-header .header.left-right #et-navigation > ul > li > a {
+    padding-bottom: 50px !important;
+  }
+}
+
+/* Nav text — same size in both normal and fixed/scrolled state */
+#et-menu li,
+.et-fixed-header #et-menu li a {
+  font-size: 18px !important;
+}
+
+/* Vertically center the search box within the nav row */
+.tau-search-item {
+  align-self: center !important;
+}
 /* === TAU Sermons Layout === */
 .tau-sermons {
   max-width: 960px;

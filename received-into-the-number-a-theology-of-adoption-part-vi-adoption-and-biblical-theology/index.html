@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <!--[if IE 6]>
 <html id="ie6" lang="en-US">
 <![endif]-->
@@ -3005,6 +3005,7 @@
     />
     <style id="et-critical-inline-css"></style>
     <link rel="stylesheet" href="../assets/bible-tooltips.css" />
+  <style id="tau-mods">#main-header-wrapper{position:sticky!important;top:0!important;z-index:99999!important;}</style>
   </head>
   <body
     class="wp-singular post-template-default single single-post postid-9186 single-format-standard wp-theme-Extra wp-child-theme-Extra-child et_extra et_fixed_nav et_fixed_nav_hide_logo_image et_smooth_scroll et_pb_gutters4 et_primary_nav_dropdown_animation_Default et_secondary_nav_dropdown_animation_Default with_sidebar with_sidebar_right et_includes_sidebar et-db"
@@ -3032,6 +3033,11 @@
               <!-- ET Navigation -->
               <div id="et-navigation">
                 <ul id="et-menu" class="nav">
+                  <li
+                    class="menu-item menu-item-type-custom menu-item-object-custom"
+                  >
+                    <a href="../index.html">Home</a>
+                  </li>
                   <li
                     id="menu-item-14772"
                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-14772"
@@ -3067,6 +3073,16 @@
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14778"
                       >
                         <a href="../our-tract/index.html">Our Tract</a>
+                      </li>
+                      <li
+                        id="menu-item-16541"
+                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16541"
+                      >
+                        <a
+                          href="https://heritagerestored.org/resources/"
+                          target="_blank"
+                          >Abolition Resources</a
+                        >
                       </li>
                     </ul>
                   </li>
@@ -3122,16 +3138,6 @@
                     >
                   </li>
                   <li
-                    id="menu-item-16541"
-                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16541"
-                  >
-                    <a
-                      href="https://heritagerestored.org/resources/"
-                      target="_blank"
-                      >Abolition Resources</a
-                    >
-                  </li>
-                  <li
                     id="menu-item-14775"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14775"
                   >
@@ -3139,7 +3145,12 @@
                       >Evangelio de Cristo</a
                     >
                   </li>
-                </ul>
+                  <li class="menu-item tau-search-item" style="display:flex;align-items:center;">
+                    <form style="display:flex;align-items:center;margin:0;" onsubmit="window.open('https://www.google.com/search?q=site%3Athingsabove.us+'+encodeURIComponent(this.querySelector('input').value),'_blank');return false;">
+                      <input type="search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
+                      <button type="submit" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
+                    </form>
+                  </li>                </ul>
                 <div id="et-mobile-navigation">
                   <span class="show-menu">
                     <div class="show-menu-button">

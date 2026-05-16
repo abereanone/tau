@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <!--[if IE 6]>
 <html id="ie6" lang="en-US">
 <![endif]-->
@@ -1492,6 +1492,7 @@
     />
     <style id="et-critical-inline-css"></style>
     <link rel="stylesheet" href="../assets/bible-tooltips.css" />
+  <style id="tau-mods">#main-header-wrapper{position:sticky!important;top:0!important;z-index:99999!important;}</style>
   </head>
   <body
     class="wp-singular page-template page-template-page-template-fullwidth page-template-page-template-fullwidth-php page page-id-34 wp-theme-Extra wp-child-theme-Extra-child et_extra et_fixed_nav et_fixed_nav_hide_logo_image et_pb_pagebuilder_fullwidth et_smooth_scroll et_pb_gutters4 et_primary_nav_dropdown_animation_Default et_secondary_nav_dropdown_animation_Default et_includes_sidebar et-db"
@@ -1519,6 +1520,11 @@
               <!-- ET Navigation -->
               <div id="et-navigation">
                 <ul id="et-menu" class="nav">
+                  <li
+                    class="menu-item menu-item-type-custom menu-item-object-custom"
+                  >
+                    <a href="../index.html">Home</a>
+                  </li>
                   <li
                     id="menu-item-14772"
                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-14772"
@@ -1554,6 +1560,16 @@
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14778"
                       >
                         <a href="../our-tract/index.html">Our Tract</a>
+                      </li>
+                      <li
+                        id="menu-item-16541"
+                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16541"
+                      >
+                        <a
+                          href="https://heritagerestored.org/resources/"
+                          target="_blank"
+                          >Abolition Resources</a
+                        >
                       </li>
                     </ul>
                   </li>
@@ -1609,16 +1625,6 @@
                     >
                   </li>
                   <li
-                    id="menu-item-16541"
-                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16541"
-                  >
-                    <a
-                      href="https://heritagerestored.org/resources/"
-                      target="_blank"
-                      >Abolition Resources</a
-                    >
-                  </li>
-                  <li
                     id="menu-item-14775"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14775"
                   >
@@ -1626,7 +1632,12 @@
                       >Evangelio de Cristo</a
                     >
                   </li>
-                </ul>
+                  <li class="menu-item tau-search-item" style="display:flex;align-items:center;">
+                    <form style="display:flex;align-items:center;margin:0;" onsubmit="window.open('https://www.google.com/search?q=site%3Athingsabove.us+'+encodeURIComponent(this.querySelector('input').value),'_blank');return false;">
+                      <input type="search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
+                      <button type="submit" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
+                    </form>
+                  </li>                </ul>
                 <div id="et-mobile-navigation">
                   <span class="show-menu">
                     <div class="show-menu-button">
@@ -1661,17 +1672,23 @@
                   <h1 class="entry-title">Contact Us</h1>
                   <div class="post-content entry-content">
                     <p>
-                      To send a question or comment, send it to (Michael
-                      Coughlin) abereanone @ pm.me
+                      Contact us via email at abereanone (at) pm (dot) me.
                     </p>
 
                     <p>
-                      If you appreciate the work we are doing and are a
-                      Christian who wants to support us, pray that God would use
-                      us for His glory.
+                      Donations are never required, but if you want to co-labor with us we will use all the funds for God's
+                      glory. We use a secure payment processor called
+                      <a href="https://www.zeffy.com/en-US/referral?referredByOrganizationId=4c5e3aa2-763d-407c-973c-19e522a3f5c1" target="_blank">Zeffy</a>
+                      that does not charge fees to non-profits. You will be prompted to donate to Zeffy as well when you complete your payment. This is optional.
                     </p>
 
-                    <p>&nbsp;</p>
+                    <p>
+                      <a
+                        href="https://www.zeffy.com/en-US/donation-form/2f6bd789-aeeb-4ab7-83e3-4ca5a5345599"
+                        target="_blank"
+                        style="display:inline-block;padding:0.85rem 1.4rem;border-radius:999px;background:#4f0f20;color:#fff;font-weight:700;text-decoration:none;"
+                      >Donate via Zeffy</a>
+                    </p>
                   </div>
                   <!-- /.post-content -->
                 </div>
