@@ -37,6 +37,7 @@ const SKIP_DIRS = new Set([
   "author",
   "page",          // /page/2/ … paged archives
   "feed",          // RSS, not a page
+  "embed",         // WordPress oEmbed iframe fragments; they canonicalise to the parent post
   "comments",
 ]);
 
