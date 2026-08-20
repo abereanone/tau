@@ -1,0 +1,105 @@
+/* Three-column post listings.
+ *
+ * The Extra theme hands its listings to salvattore, which reads a column count out
+ * of a ::before content string and wraps the articles in .column divs at runtime.
+ * On this static mirror that wrapping is unreliable, which is why the feed rendered
+ * as one full-width column. These rules lay the listing out with CSS grid instead,
+ * and work whether or not salvattore wrapped anything: the grid items are either the
+ * articles themselves or the columns it created.
+ *
+ * Applies to the home page, /page/N/, and the category, tag and author archives.
+ */
+
+.paginated_content .paginated_page {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px 26px;
+  align-items: start;
+}
+
+/* If salvattore did wrap the articles, let its columns be the grid items. */
+.paginated_content .paginated_page > .column {
+  width: auto !important;
+  padding: 0 !important;
+  float: none !important;
+  display: grid;
+  gap: 30px;
+  align-content: start;
+}
+
+.paginated_content .paginated_page article.post {
+  width: auto !important;
+  max-width: none !important;
+  float: none !important;
+  margin: 0 !important;
+}
+
+/* Cards were full-bleed; give the image a fixed, consistent crop. */
+.paginated_content .paginated_page article.post .header {
+  margin: 0;
+}
+
+.paginated_content .paginated_page article.post .featured-image {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.paginated_content .paginated_page article.post .featured-image img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.paginated_content .paginated_page article.post:hover .featured-image img {
+  transform: scale(1.04);
+}
+
+.paginated_content .paginated_page article.post .post-content {
+  padding: 0.75rem 0 0;
+}
+
+.paginated_content .paginated_page article.post .post-title {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  margin: 0 0 0.35rem;
+}
+
+.paginated_content .paginated_page article.post .post-meta {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
+}
+
+.paginated_content .paginated_page article.post .post-meta p {
+  margin: 0;
+}
+
+.paginated_content .paginated_page article.post .read-more-button {
+  font-size: 0.8rem;
+}
+
+/* The windowed pagination the generator writes uses a gap marker. */
+.pagination li.gap span {
+  padding: 0 0.45rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 980px) {
+  .paginated_content .paginated_page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .paginated_content .paginated_page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .paginated_content .paginated_page article.post .featured-image img {
+    height: 220px;
+  }
+}

@@ -1,130 +1,139 @@
-import json
-import math
+"""Rebuild the home page and /page/N/ archives from the post cards already in them.
+
+    python tools/generate_paginated_pages.py
+
+Run from the repo root after adding or removing a post. Cards are harvested from the
+existing listing pages rather than from assets/posts.json, because posts.json carries
+only slugs and empty titles while the cards carry the title, date and featured image
+the theme already chose for each post.
+
+Every card's href and img src is rewritten to a root-absolute path, so the same card
+markup works on the home page and under /page/N/ alike.
+"""
+
+import io
 import os
 import re
+import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-POSTS_JSON = os.path.join(ROOT, 'assets', 'posts.json')
-INDEX_HTML = os.path.join(ROOT, 'index.html')
-OUT_DIR = os.path.join(ROOT, 'page')
+INDEX = os.path.join(ROOT, "index.html")
+PAGE_DIR = os.path.join(ROOT, "page")
 
-def slug_to_path(url):
-    return os.path.join(ROOT, url.replace('/', os.sep))
+PER_PAGE = 24
+START = '<div class="paginated_content">'
+END = "<!-- /.posts-blog-feed-module -->"
 
-def extract_image_from_post(post_path):
-        try:
-                with open(post_path, 'r', encoding='utf-8') as f:
-                        txt = f.read()
-        except Exception:
-                return ''
-        m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', txt)
-        if m:
-                return m.group(1)
-        return ''
+read = lambda p: io.open(p, encoding="utf-8-sig", newline="").read()
 
-def find_article_block_in_index(index_txt, post_url):
-        # find anchor for post_url and then extract enclosing <article>...</article>
-        href = f'href="{post_url}"'
-        pos = index_txt.find(href)
-        if pos == -1:
-                return None
-        # find the last '<article' before pos
-        a_start = index_txt.rfind('<article', 0, pos)
-        if a_start == -1:
-                return None
-        a_end = index_txt.find('</article>', pos)
-        if a_end == -1:
-                return None
-        a_end += len('</article>')
-        return index_txt[a_start:a_end]
 
-def make_article_html(post, img_src, index_txt):
-        # try to copy full article block from index.html to preserve classes and layout
-        url = post.get('url')
-        found = find_article_block_in_index(index_txt, url)
-        if found:
-                return found
-        title = post.get('title') or post.get('slug')
-        # fallback minimal article block resembling homepage
-        return f'''<article class="post">
-    <div class="header">
-        <a href="{url}" class="featured-image">
-            {f'<img src="{img_src}" alt="{title}" />' if img_src else ''}
-            <span class="et_pb_extra_overlay"></span>
-        </a>
-    </div>
-    <div class="post-content">
-        <h2 class="post-title entry-title"><a href="{url}">{title}</a></h2>
-        <div class="excerpt entry-summary"><a class="read-more-button" href="{url}">Read More</a></div>
-    </div>
-</article>'''
+def write(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    io.open(path, "w", encoding="utf-8-sig", newline="").write(text)
 
-def build_pagination_ul(total_pages, current=None):
-    parts = ['<ul class="pagination">']
-    prev_target = current - 1 if current and current > 1 else 1
-    next_target = current + 1 if current and current < total_pages else total_pages
-    parts.append(f'<li class="prev static-arrow"><a class="prev static-arrow" href="../{prev_target}/index.html"></a></li>')
-    for i in range(1, total_pages+1):
-        cls = ' current' if current==i else ''
-        parts.append(f'<li class="{cls}"><a href="../{i}/index.html" class="static-pagination-page pagination-page-{i}" data-page="{i}">{i}</a></li>')
-    parts.append(f'<li class="next static-arrow"><a class="next static-arrow" href="../{next_target}/index.html"></a></li>')
-    parts.append('</ul>')
-    return '\n'.join(parts)
+
+def absolutise(card):
+    """slug/index.html -> /slug/  ·  wp-content/x.jpg -> /wp-content/x.jpg
+
+    Cards copied from a page under /page/N/ would otherwise resolve against that
+    directory. Post links lose the index.html so they match the sitemap and the
+    canonical each post declares.
+    """
+    def fix(m):
+        attr, url = m.group(1), m.group(2)
+        if url.startswith(("/", "http://", "https://", "#", "data:", "mailto:")):
+            return m.group(0)
+        url = re.sub(r"^(\.\./)+", "", url)
+        if url.endswith("/index.html"):
+            url = url[: -len("index.html")]
+        return f'{attr}="/{url}"'
+
+    return re.sub(r'\b(href|src)="([^"]+)"', fix, card)
+
+
+def harvest():
+    """Every post card, in the order the site already lists them, deduped by URL."""
+    sources = [INDEX]
+    if os.path.isdir(PAGE_DIR):
+        nums = sorted((int(d) for d in os.listdir(PAGE_DIR) if d.isdigit()))
+        sources += [os.path.join(PAGE_DIR, str(n), "index.html") for n in nums]
+
+    cards, seen = [], set()
+    for src in sources:
+        if not os.path.exists(src):
+            continue
+        for card in re.findall(r"<article class=\"post\">.*?</article>", read(src), re.S):
+            card = absolutise(card)
+            m = re.search(r'href="([^"]+)"', card)
+            if not m or m.group(1) in seen:
+                continue
+            seen.add(m.group(1))
+            cards.append(card)
+    return cards
+
+
+def pagination(total, current):
+    """Windowed: first, last, and a couple either side of current. 27 numbers in a
+    row is unreadable, which is what listing every page would give at 24 per page."""
+    href = lambda n: "/" if n == 1 else f"/page/{n}/index.html"
+    want = {1, total, current} | {current + d for d in (-2, -1, 1, 2)}
+    pages = sorted(n for n in want if 1 <= n <= total)
+
+    out = ['<ul class="pagination">']
+    if current > 1:
+        out.append(f'<li class="prev static-arrow"><a class="prev static-arrow" href="{href(current-1)}"></a></li>')
+    prev = 0
+    for n in pages:
+        if prev and n > prev + 1:
+            out.append('<li class="gap"><span>&hellip;</span></li>')
+        cls = ' class="current"' if n == current else ""
+        out.append(f'<li{cls}><a href="{href(n)}">{n}</a></li>')
+        prev = n
+    if current < total:
+        out.append(f'<li class="next static-arrow"><a class="next static-arrow" href="{href(current+1)}"></a></li>')
+    out.append("</ul>")
+    return "\n".join(out)
+
+
+def with_base(html):
+    """Pages under /page/N/ need <base href="/"> for the theme's relative assets."""
+    if re.search(r"<base\b", html):
+        return html
+    return re.sub(r"(<head[^>]*>)", r'\1\n    <base href="/" />', html, count=1)
+
 
 def main():
-    with open(POSTS_JSON,'r',encoding='utf-8') as f:
-        posts = json.load(f)
+    cards = harvest()
+    total = max(1, -(-len(cards) // PER_PAGE))
+    index_txt = read(INDEX)
 
-    # create 18 pages as requested by user
-    total_pages = 18
-    per_page = math.ceil(len(posts)/total_pages)
-
-    with open(INDEX_HTML,'r',encoding='utf-8') as f:
-        index_txt = f.read()
-
-    start_marker = '<div class="paginated_content">'
-    end_marker = '<!-- /.posts-blog-feed-module -->'
-    si = index_txt.find(start_marker)
-    ei = index_txt.find(end_marker)
+    si, ei = index_txt.find(START), index_txt.find(END)
     if si == -1 or ei == -1:
-        print('Could not find paginated content markers in index.html')
-        return
+        raise SystemExit("Could not find the paginated content markers in index.html")
+    prefix, suffix = index_txt[:si], index_txt[ei + len(END):]
 
-    prefix = index_txt[:si]
-    suffix = index_txt[ei+len(end_marker):]
+    for page in range(1, total + 1):
+        chunk = cards[(page - 1) * PER_PAGE: page * PER_PAGE]
+        block = (
+            f'{START}\n<div class="paginated_page paginated_page_{page} active" data-columns>\n'
+            + "\n".join(chunk)
+            + "\n</div>\n</div>\n"
+            + pagination(total, page)
+            + "\n"
+        )
+        html = prefix + block + END + suffix
+        if page == 1:
+            write(INDEX, html)
+        else:
+            write(os.path.join(PAGE_DIR, str(page), "index.html"), with_base(html))
 
-    os.makedirs(OUT_DIR, exist_ok=True)
+    for d in os.listdir(PAGE_DIR):
+        if d.isdigit() and int(d) > total:
+            shutil.rmtree(os.path.join(PAGE_DIR, d))
+            print("removed stale", os.path.join("page", d))
 
-    for page in range(1, total_pages+1):
-        s = (page-1)*per_page
-        page_posts = posts[s:s+per_page]
-        articles = []
-        for p in page_posts:
-            post_index = slug_to_path(p['url'])
-            if post_index.endswith(os.sep) or post_index.endswith('/'):
-                post_index = os.path.join(post_index, 'index.html')
-            if not os.path.isabs(post_index):
-                post_index = os.path.join(ROOT, post_index)
-            img = extract_image_from_post(post_index)
-            articles.append(make_article_html(p, img, index_txt))
+    print(f"{len(cards)} posts -> {total} pages of {PER_PAGE} (home + page/2..{total})")
 
-        # build paginated_page wrapper so layout JS/CSS finds expected classes
-        paginated_block = start_marker + '\n'
-        paginated_block += f'<div class="paginated_page paginated_page_{page} active" data-columns>\n'
-        paginated_block += '\n'.join(articles)
-        paginated_block += '\n</div>\n'  # close paginated_page
-        paginated_block += '</div>\n'  # close paginated_content
-        paginated_block += '                      <span class="loader"><img src="wp-content/themes/Extra/images/pagination-loading.gif" alt="Loading"/></span>\n'
-        paginated_block += build_pagination_ul(total_pages, current=page)
 
-        out_html = prefix + paginated_block + suffix
-
-        out_dir = os.path.join(OUT_DIR, str(page))
-        os.makedirs(out_dir, exist_ok=True)
-        out_path = os.path.join(out_dir, 'index.html')
-        with open(out_path, 'w', encoding='utf-8') as out_f:
-            out_f.write(out_html)
-        print('Wrote', out_path)
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
