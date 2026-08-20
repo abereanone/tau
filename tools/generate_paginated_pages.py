@@ -21,6 +21,7 @@ INDEX = os.path.join(ROOT, "index.html")
 PAGE_DIR = os.path.join(ROOT, "page")
 
 PER_PAGE = 24
+ORIGIN = "https://thingsabove.us"
 START = '<div class="paginated_content">'
 END = "<!-- /.posts-blog-feed-module -->"
 
@@ -101,6 +102,23 @@ def with_base(html):
         return html
     return re.sub(r"(<head[^>]*>)", r'\1\n    <base href="/" />', html, count=1)
 
+def retarget(html, page):
+    """Point a paged archive's head at itself.
+
+    Everything before the card block is copied from index.html, so without this
+    every /page/N/ would declare the home page as its canonical and its og:url,
+    telling Google the archives are duplicates of the front page.
+    """
+    url = "%s/page/%d/" % (ORIGIN, page)
+    html = re.sub(r'(<link rel="canonical" href=")[^"]*(")', lambda m: m.group(1) + url + m.group(2), html, count=1)
+    html = re.sub(r'(<meta property="og:url" content=")[^"]*(")', lambda m: m.group(1) + url + m.group(2), html, count=1)
+    html = re.sub(r'(<meta property="og:title" content=")([^"]*)(")',
+                  lambda m: m.group(1) + m.group(2) + (" - Page %d" % page) + m.group(3), html, count=1)
+    html = re.sub(r"(<title>)(.*?)(</title>)",
+                  lambda m: m.group(1) + m.group(2) + (" - Page %d" % page) + m.group(3), html, count=1, flags=re.S)
+    return html
+
+
 
 def main():
     cards = harvest()
@@ -125,7 +143,7 @@ def main():
         if page == 1:
             write(INDEX, html)
         else:
-            write(os.path.join(PAGE_DIR, str(page), "index.html"), with_base(html))
+            write(os.path.join(PAGE_DIR, str(page), "index.html"), retarget(with_base(html), page))
 
     for d in os.listdir(PAGE_DIR):
         if d.isdigit() and int(d) > total:
