@@ -4,7 +4,14 @@
     : "";
   const metaUrl = new URL("bible-tooltips-meta.json", scriptUrl || window.location.href);
   const versesUrl = new URL("bible-tooltips-verses.json", scriptUrl || window.location.href);
-  const skipTags = new Set(["A", "SCRIPT", "STYLE", "TEXTAREA", "INPUT", "SELECT", "OPTION", "CODE", "PRE"]);
+  // Headings are titles, not prose: a post called "5 Lessons from Acts 5" should read as a
+  // title, not carry a tooltip link in the middle of it. That covers the post title, the
+  // card titles in the listings, and any subheading in an article.
+  const skipTags = new Set([
+    "A", "SCRIPT", "STYLE", "TEXTAREA", "INPUT", "SELECT", "OPTION", "CODE", "PRE",
+    "H1", "H2", "H3", "H4", "H5", "H6"
+  ]);
+  const skipClasses = ["entry-title", "post-title", "entry-summary", "excerpt"];
   let metaPromise;
   let versesPromise;
   let referenceRegex;
@@ -132,6 +139,7 @@
   function shouldSkip(node) {
     for (let current = node.parentElement; current; current = current.parentElement) {
       if (skipTags.has(current.tagName) || current.classList.contains("bible-ref")) return true;
+      if (skipClasses.some((c) => current.classList.contains(c))) return true;
     }
     return false;
   }
