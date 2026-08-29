@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects: <from> <to> <status>
+# Both forms are listed because a /* rule does not match the bare parent path.
+
+/abolition-resources-links    https://heritagerestored.org/resources/  301
+/abolition-resources-links/*  https://heritagerestored.org/resources/  301
