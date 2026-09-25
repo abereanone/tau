@@ -1,0 +1,61 @@
+/* Site search page (search/index.html). Results reuse the listing cards from post-grid.css. */
+
+.site-search-form {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 12px;
+  max-width: 640px;
+}
+
+.site-search-form input[type="search"] {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.site-search-form button,
+.site-search-more {
+  padding: 10px 18px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 4px;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.site-search-status {
+  margin: 0 0 24px;
+  opacity: 0.75;
+}
+
+.site-search-snippet {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.site-search-results mark,
+.site-search-snippet mark {
+  background: #fff1a8;
+  color: inherit;
+  padding: 0 1px;
+}
+
+.site-search-more {
+  display: block;
+  margin: 30px auto 0;
+}
+
+.site-search-more[hidden] {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .paginated_content .paginated_page.site-search-results {
+    grid-template-columns: 1fr;
+  }
+}
