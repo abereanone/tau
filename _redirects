@@ -1,3 +1,4 @@
+/README.md / 302
 # Cloudflare Pages redirects: <from> <to> <status>
 # Both forms are listed because a /* rule does not match the bare parent path.
 
