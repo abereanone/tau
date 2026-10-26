@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thingsabove.us/sitemap.xml
