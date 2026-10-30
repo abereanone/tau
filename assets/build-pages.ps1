@@ -76,7 +76,7 @@ function Make-Pagination($cur, $total) {
     [void]$sb.AppendLine('<ul class="pagination">')
     if ($cur -gt 1) {
         $ph = if ($cur -eq 2) { '/' } else { "/page/$($cur-1)/index.html" }
-        [void]$sb.AppendLine("<li class=`"prev static-arrow`"><a class=`"prev static-arrow`" href=`"$ph`"></a></li>")
+        [void]$sb.AppendLine("<li class=`"prev static-arrow`"><a class=`"prev static-arrow`" href=`"$ph`" aria-label=`"Previous page`"></a></li>")
     }
     for ($i = 1; $i -le $total; $i++) {
         $h   = if ($i -eq 1) { '/' } else { "/page/$i/index.html" }
@@ -85,7 +85,7 @@ function Make-Pagination($cur, $total) {
     }
     if ($cur -lt $total) {
         $nh = "/page/$($cur+1)/index.html"
-        [void]$sb.AppendLine("<li class=`"next static-arrow`"><a class=`"next static-arrow`" href=`"$nh`"></a></li>")
+        [void]$sb.AppendLine("<li class=`"next static-arrow`"><a class=`"next static-arrow`" href=`"$nh`" aria-label=`"Next page`"></a></li>")
     }
     [void]$sb.Append('</ul>')
     return $sb.ToString()

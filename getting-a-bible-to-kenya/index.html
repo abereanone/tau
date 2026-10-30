@@ -3151,8 +3151,8 @@
                   </li>
                   <li class="menu-item tau-search-item" style="display:flex;align-items:center;">
                     <form style="display:flex;align-items:center;margin:0;" onsubmit="location.href='/search/?q='+encodeURIComponent(this.querySelector('input').value);return false;">
-                      <input type="search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
-                      <button type="submit" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
+                      <input type="search" aria-label="Search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
+                      <button type="submit" aria-label="Search" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
                     </form>
                   </li>                </ul>
                 <div id="et-mobile-navigation">
@@ -3217,6 +3217,8 @@
                   <img
                     src="../wp-content/uploads/2018/05/ben-white-181034-unsplash-scaled-1-scaled-1.jpg"
                     alt="Getting a Bible to Kenya"
+                    width="2048"
+                    height="1367"
                   />
                 </div>
 
@@ -3236,6 +3238,7 @@
                         alt=""
                         width="1024"
                         height="684"
+                        loading="lazy"
                       />
                       <p id="caption-attachment-2007" class="wp-caption-text">
                         Photo by Ben White on Unsplash
@@ -3402,7 +3405,8 @@
                         alt=""
                         width="600"
                         height="400"
-                      / onerror="this.style.display='none'">
+                      / onerror="this.style.display='none'"
+                        loading="lazy">
                       <p id="caption-attachment-2009" class="wp-caption-text">
                         <a
                           style="
@@ -3645,6 +3649,10 @@
                         <img
                           src="../wp-content/uploads/2019/09/Featured-Image-Doctrine-on-Which-the-Church-Stands-or-Falls.jpg"
                           alt="Book Review — The Doctrine on Which the Church Stands or Falls"
+                          width="720"
+                          height="400"
+                          loading="lazy"
+                          decoding="async"
                         /><span class="et_pb_extra_overlay"></span>
                       </a>
                     </div>
@@ -3670,6 +3678,10 @@
                         <img
                           src="../wp-content/uploads/2019/10/serpent-e1570049972553.jpg"
                           alt="Satan&#8217;s Strategies for Temptation &#8211; Part 2"
+                          width="667"
+                          height="370"
+                          loading="lazy"
+                          decoding="async"
                         /><span class="et_pb_extra_overlay"></span>
                       </a>
                     </div>

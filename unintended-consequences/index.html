@@ -3151,8 +3151,8 @@
                   </li>
                   <li class="menu-item tau-search-item" style="display:flex;align-items:center;">
                     <form style="display:flex;align-items:center;margin:0;" onsubmit="location.href='/search/?q='+encodeURIComponent(this.querySelector('input').value);return false;">
-                      <input type="search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
-                      <button type="submit" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
+                      <input type="search" aria-label="Search" placeholder="Search&#x2026;" style="padding:3px 7px;border:1px solid rgba(255,255,255,0.4);border-right:none;border-radius:3px 0 0 3px;font-size:12px;height:26px;background:rgba(255,255,255,0.15);color:#fff;outline:none;width:110px;" />
+                      <button type="submit" aria-label="Search" style="padding:0 8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-left:none;border-radius:0 3px 3px 0;height:26px;cursor:pointer;font-size:14px;">&#x1F50D;</button>
                     </form>
                   </li>                </ul>
                 <div id="et-mobile-navigation">
@@ -3220,6 +3220,8 @@
                   <img
                     src="../wp-content/uploads/2018/09/bernard-hermant-665070-unsplash.jpg"
                     alt="Unintended Consequences"
+                    width="715"
+                    height="411"
                   />
                 </div>
 
@@ -3230,11 +3232,12 @@
                         fetchpriority="high"
                         decoding="async"
                         class="alignleft size-medium wp-image-12877"
-                        src="../wp-content/uploads/audio-edition-4-300x300.png"
+                        src="../wp-content/uploads/audio-edition-4-300x300.webp"
                         alt="phone, headphones, and Things Above Us logo"
                         width="300"
                         height="300"
-                      / onerror="this.style.display='none'">In one of the early releases of iOS 11.0.1, Apple
+                      / onerror="this.style.display='none'"
+                        loading="lazy">In one of the early releases of iOS 11.0.1, Apple
                       introduced a feature to iPhones called
                       <em>Do Not Disturb While Driving</em>. The reason for this
                       feature is obvious: allow people to drive without the
@@ -3582,6 +3585,10 @@
                         <img
                           src="../wp-content/uploads/2020/02/Untitled-2.jpg"
                           alt="The Ugly Business Of Politics And The Trinitarian Hope of Romans 1:1-6"
+                          width="720"
+                          height="400"
+                          loading="lazy"
+                          decoding="async"
                         /><span class="et_pb_extra_overlay"></span>
                       </a>
                     </div>
@@ -3606,6 +3613,10 @@
                         <img
                           src="../wp-content/uploads/2019/03/old-bible-e1553722872296.jpg"
                           alt="Pastors, Preach God"
+                          width="700"
+                          height="388"
+                          loading="lazy"
+                          decoding="async"
                         /><span class="et_pb_extra_overlay"></span>
                       </a>
                     </div>

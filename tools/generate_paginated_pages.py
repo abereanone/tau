@@ -8,13 +8,16 @@ only slugs and empty titles while the cards carry the title, date and featured i
 the theme already chose for each post.
 
 Every card's href and img src is rewritten to a root-absolute path, so the same card
-markup works on the home page and under /page/N/ alike.
+markup works on the home page and under /page/N/ alike. Each page is then passed through
+add_image_attrs.process_html, so a card for a new post gets width/height/lazy-loading too.
 """
 
 import io
 import os
 import re
 import shutil
+
+from add_image_attrs import process_html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX = os.path.join(ROOT, "index.html")
@@ -82,7 +85,7 @@ def pagination(total, current):
 
     out = ['<ul class="pagination">']
     if current > 1:
-        out.append(f'<li class="prev static-arrow"><a class="prev static-arrow" href="{href(current-1)}"></a></li>')
+        out.append(f'<li class="prev static-arrow"><a class="prev static-arrow" href="{href(current-1)}" aria-label="Previous page"></a></li>')
     prev = 0
     for n in pages:
         if prev and n > prev + 1:
@@ -91,7 +94,7 @@ def pagination(total, current):
         out.append(f'<li{cls}><a href="{href(n)}">{n}</a></li>')
         prev = n
     if current < total:
-        out.append(f'<li class="next static-arrow"><a class="next static-arrow" href="{href(current+1)}"></a></li>')
+        out.append(f'<li class="next static-arrow"><a class="next static-arrow" href="{href(current+1)}" aria-label="Next page"></a></li>')
     out.append("</ul>")
     return "\n".join(out)
 
@@ -116,6 +119,8 @@ def retarget(html, page):
                   lambda m: m.group(1) + m.group(2) + (" - Page %d" % page) + m.group(3), html, count=1)
     html = re.sub(r"(<title>)(.*?)(</title>)",
                   lambda m: m.group(1) + m.group(2) + (" - Page %d" % page) + m.group(3), html, count=1, flags=re.S)
+    html = re.sub(r'(<h1 class="tau-h1">)(.*?)(</h1>)',
+                  lambda m: m.group(1) + m.group(2) + (" - Page %d" % page) + m.group(3), html, count=1)
     return html
 
 
@@ -141,9 +146,10 @@ def main():
         )
         html = prefix + block + END + suffix
         if page == 1:
-            write(INDEX, html)
+            write(INDEX, process_html(html, "index.html"))
         else:
-            write(os.path.join(PAGE_DIR, str(page), "index.html"), retarget(with_base(html), page))
+            html = retarget(with_base(html), page)
+            write(os.path.join(PAGE_DIR, str(page), "index.html"), process_html(html, "page/%d/index.html" % page))
 
     for d in os.listdir(PAGE_DIR):
         if d.isdigit() and int(d) > total:

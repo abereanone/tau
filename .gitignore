@@ -1,3 +1,4 @@
 serve.bat
 launchClaude.bat
 .claude/
+__pycache__/
