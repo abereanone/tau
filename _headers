@@ -1,0 +1,14 @@
+# Cloudflare Pages response headers.
+
+# WordPress gives an edited image a new filename, so an upload is safe to cache for a year.
+# (tools/recompress_jpegs.py rewrites files in place, but only ever makes them smaller.)
+/wp-content/uploads/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Theme, WordPress core and builder-cache files carry version hashes in their names.
+/wp-content/themes/*
+  Cache-Control: public, max-age=2592000
+/wp-includes/*
+  Cache-Control: public, max-age=2592000
+/wp-content/et-cache/*
+  Cache-Control: public, max-age=2592000
