@@ -125,15 +125,24 @@
     const chapter = Number(match[2]);
     const segments = match[3].split(",").map((part) => part.trim()).filter(Boolean);
     const parts = [];
+    const versions = [];
     segments.forEach((segment) => {
       segmentKeys(bookCode, chapter, segment).forEach((key) => {
-        const verse = data.verses && data.verses[key];
+        const entry = data.verses && data.verses[key];
+        // An entry is plain text, or { text, version } when the verse is not the BSB reading.
+        const verse = entry && typeof entry === "object" ? entry.text : entry;
         if (verse) {
-          parts.push(key.replace(/^[a-z0-9]+\s+/, "") + " " + verse);
+          const version = (entry && entry.version) || data.version || "BSB";
+          if (versions.indexOf(version) === -1) versions.push(version);
+          // The reference is shown up front, so the first verse gets no number.
+          parts.push(parts.length ? key.replace(/^[a-z0-9]+\s+\d+:/, "") + " " + verse : verse);
         }
       });
     });
-    return parts.length ? parts.join(" ") + " (" + (data.version || "BSB") + ")" : "Verse not found.";
+    const label = String(reference || "").trim();
+    return parts.length
+      ? (label ? label + " - " : "") + parts.join(" ") + " (" + versions.join("/") + ")"
+      : "Verse not found.";
   }
 
   function shouldSkip(node) {
