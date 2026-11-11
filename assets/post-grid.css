@@ -10,6 +10,12 @@
  * Applies to the home page, /page/N/, and the category, tag and author archives.
  */
 
+/* Home and /page/N/ have no visible heading (the h1 is screen-reader only), so under the fixed
+ * header the first row of cards sat flush against it. Category/author archives have their own heading. */
+body.home .paginated_content {
+  padding-top: 2.25rem;
+}
+
 .paginated_content .paginated_page {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
