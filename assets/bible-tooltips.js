@@ -192,7 +192,35 @@
     element.addEventListener("focus", show);
     element.addEventListener("mouseleave", hide);
     element.addEventListener("blur", hide);
+    // Touch screens never send mouseleave, so a second tap on the same reference closes it.
+    element.addEventListener("pointerdown", (event) => {
+      element.__bibleWasActive = event.pointerType !== "mouse" && !!element.__bibleTooltipActive;
+    });
+    element.addEventListener("click", () => {
+      if (!element.__bibleWasActive) return;
+      element.__bibleWasActive = false;
+      hide();
+      element.blur();
+    });
   }
+
+  // ...and a tap anywhere else (outside the reference and its tooltip), or Escape, closes any open one.
+  function closeAll(except) {
+    document.querySelectorAll(".bible-ref").forEach((el) => {
+      if (el === except || !el.__bibleTooltipActive) return;
+      el.__bibleTooltipActive = false;
+      if (el.__bibleTooltip) el.__bibleTooltip.style.display = "none";
+      if (document.activeElement === el) el.blur();
+    });
+  }
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (target && target.closest(".bible-tooltip")) return;
+    closeAll(target && target.closest(".bible-ref"));
+  }, true);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeAll(null);
+  });
 
   function positionTooltip(anchor, tooltip) {
     const rect = anchor.getBoundingClientRect();
