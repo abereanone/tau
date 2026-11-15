@@ -177,50 +177,64 @@
     node.parentNode.replaceChild(fragment, node);
   }
 
+  // Mouse, keyboard and touch, the same way heritagerestored.org does it: a reference opens on hover or
+  // focus and pins open on click/tap, Enter or Space; a second tap, a tap anywhere else, or Escape closes it.
+  let pinnedRef = null;
+
+  function hideRef(element) {
+    element.__bibleTooltipActive = false;
+    if (element.__bibleTooltip) element.__bibleTooltip.style.display = "none";
+    element.setAttribute("aria-expanded", "false");
+    if (pinnedRef === element) pinnedRef = null;
+  }
+
+  function showRef(element) {
+    if (pinnedRef && pinnedRef !== element) hideRef(pinnedRef);
+    element.__bibleTooltipActive = true;
+    element.setAttribute("aria-expanded", "true");
+    ensureTooltip(element);
+  }
+
   function enhanceReference(element) {
     if (element.dataset.bibleTooltipState) return;
     element.dataset.bibleTooltipState = "ready";
-    const show = () => {
-      element.__bibleTooltipActive = true;
-      ensureTooltip(element);
-    };
-    const hide = () => {
-      element.__bibleTooltipActive = false;
-      if (element.__bibleTooltip) element.__bibleTooltip.style.display = "none";
-    };
-    element.addEventListener("mouseenter", show);
-    element.addEventListener("focus", show);
-    element.addEventListener("mouseleave", hide);
-    element.addEventListener("blur", hide);
-    // Touch screens never send mouseleave, so a second tap on the same reference closes it.
-    element.addEventListener("pointerdown", (event) => {
-      element.__bibleWasActive = event.pointerType !== "mouse" && !!element.__bibleTooltipActive;
+    element.setAttribute("role", "button");
+    element.tabIndex = 0;
+    element.setAttribute("aria-expanded", "false");
+    element.addEventListener("mouseenter", () => { if (!pinnedRef) showRef(element); });
+    element.addEventListener("mouseleave", () => { if (pinnedRef !== element) hideRef(element); });
+    element.addEventListener("focus", () => showRef(element));
+    element.addEventListener("blur", () => { if (pinnedRef !== element) hideRef(element); });
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (pinnedRef === element) {
+        hideRef(element);
+      } else {
+        showRef(element);
+        pinnedRef = element;
+      }
     });
-    element.addEventListener("click", () => {
-      if (!element.__bibleWasActive) return;
-      element.__bibleWasActive = false;
-      hide();
-      element.blur();
+    element.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        element.click();
+      } else if (event.key === "Escape") {
+        hideRef(element);
+        element.blur();
+      }
     });
   }
 
-  // ...and a tap anywhere else (outside the reference and its tooltip), or Escape, closes any open one.
-  function closeAll(except) {
-    document.querySelectorAll(".bible-ref").forEach((el) => {
-      if (el === except || !el.__bibleTooltipActive) return;
-      el.__bibleTooltipActive = false;
-      if (el.__bibleTooltip) el.__bibleTooltip.style.display = "none";
-      if (document.activeElement === el) el.blur();
-    });
-  }
-  document.addEventListener("pointerdown", (event) => {
-    const target = event.target instanceof Element ? event.target : null;
-    if (target && target.closest(".bible-tooltip")) return;
-    closeAll(target && target.closest(".bible-ref"));
-  }, true);
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeAll(null);
+    if (event.key === "Escape" && pinnedRef) hideRef(pinnedRef);
   });
+  // pointerdown rather than click: iPhones send no click for a tap on plain text, so a document-level
+  // click listener would never hear the tap that should close the verse.
+  document.addEventListener("pointerdown", (event) => {
+    if (!pinnedRef) return;
+    const tip = pinnedRef.__bibleTooltip;
+    if (!pinnedRef.contains(event.target) && !(tip && tip.contains(event.target))) hideRef(pinnedRef);
+  }, true);
 
   function positionTooltip(anchor, tooltip) {
     const rect = anchor.getBoundingClientRect();
