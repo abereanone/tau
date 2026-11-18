@@ -219,7 +219,18 @@ def main():
     if not dry:
         subprocess.check_call([sys.executable, os.path.join(ROOT, "tools", "build_search_index.py")], cwd=ROOT)
     sitemap_entry(slug, dry)
+    if not dry:
+        go_links()
     print("done" + (" (dry run, nothing written)" if dry else ""))
+
+
+def go_links():
+    """Point the new post's outside links (and share buttons) at go.thingsabove.us so clicks are
+    counted, and add them to go/links.json. Safe to re-run: links already rewritten are left alone."""
+    subprocess.check_call(["node", os.path.join(ROOT, "tools", "go-links.mjs"), ".",
+                           "--base", "https://go.thingsabove.us/",
+                           "--own", "thingsabove.us,www.thingsabove.us",
+                           "--skip", "wp-content,wp-includes,assets,tools"], cwd=ROOT)
 
 
 if __name__ == "__main__":
