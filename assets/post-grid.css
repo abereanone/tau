@@ -23,6 +23,21 @@ body.home .paginated_content {
   align-items: start;
 }
 
+/* Salvattore's column hint lives in ::before content; as a grid item it showed as
+ * text ("1 .column.size-1of1"). display:none keeps the content readable by salvattore. */
+.paginated_content .paginated_page[data-columns]::before {
+  display: none;
+}
+
+/* The theme's list layout puts the image and text side by side at 50% each, which
+ * squeezed author-archive cards into half their width. */
+.paginated_content .paginated_page article.post .header,
+.paginated_content .paginated_page article.post .post-content {
+  width: auto;
+  float: none;
+  margin-left: 0;
+}
+
 /* If salvattore did wrap the articles, let its columns be the grid items. */
 .paginated_content .paginated_page > .column {
   width: auto !important;
