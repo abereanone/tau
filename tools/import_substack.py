@@ -95,9 +95,12 @@ def categories(post):
 
 def clean_body(post, slug, upload_dir, dry):
     soup = BeautifulSoup(post["body_html"], "html.parser")
-    for sel in (".subscription-widget-wrap-editor", ".button-wrapper", ".image-link-expand", "form", "button", "svg"):
+    for sel in (".subscription-widget-wrap-editor", ".button-wrapper", ".directMessage", ".image-link-expand", "form", "button", "svg"):
         for el in soup.select(sel):
             el.decompose()
+    for p in soup.find_all("p"):
+        if not p.get_text(strip=True) and not p.find(["img", "br"]):
+            p.decompose()
     figs = soup.select(".captioned-image-container")
     if figs and "topImage&quot;:true" in str(figs[0]).replace('"', "&quot;"):
         figs.pop(0).decompose()
