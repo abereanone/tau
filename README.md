@@ -24,6 +24,12 @@ python serve.py        # http://localhost:8082, opens a browser; unknown paths r
 
 `add_post.py` deliberately does not run `generate_posts_json.py` (the committed `assets/posts.json` is ~150 posts behind; regenerate it as its own cleanup) or `gen-sitemap.mjs` (it stamps every URL with today's file time). Tag pages are not updated for new posts.
 
+## Allen Nelson's Substack (automatic)
+
+Allen Nelson's posts at cuatronelson.substack.com are copied here every night. The Windows task "TAU Substack Import" (23:00) runs `tools/substack-nightly.ps1`: for each Substack post not yet here it runs `tools/import_substack.py <slug>` (page cloned from `lessons-from-acts-5`, Substack date, cover as featured image, Substack widgets removed, then `add_post.py`), commits and pushes. Pages show within 2 hours (edge cache). It skips the night if the repo has uncommitted or unpushed work. Log: `%LOCALAPPDATA%\tau-substack\nightly.log`, `last-run.txt`; problems also pop up a Windows notice. By hand: `python tools/import_substack.py --list`, then `python tools/import_substack.py <slug>`.
+
+Quote cards are not automatic: each imported post is listed in `C:/code/quote-cards/tau/needs-quotes.md`, and a Claude session picks 1-2 quotes, gets Michael's OK, then renders, uploads and rebuilds `/quotes/` (see `C:/code/quote-cards/static-pages.py`).
+
 ## Tools (run from the repo root after adding, removing or editing a post)
 
 | Script | What it does |
