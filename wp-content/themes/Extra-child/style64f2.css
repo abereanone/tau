@@ -90,9 +90,19 @@ img, video, iframe, embed, object {
   }
 }
 
-/* Vertically center the search box within the nav row; hide on mobile */
+/* Line the search box up with the menu words (they sit at the top of the 100px row); hide on mobile */
 .tau-search-item {
-  align-self: center !important;
+  align-self: flex-start !important;
+  margin-top: -4px !important;
+}
+/* Posts: the sidebar is empty, so drop it and center the post under the header */
+@media only screen and (min-width: 768px) {
+  .single .et_pb_extra_column_sidebar {
+    display: none !important;
+  }
+  .single #content-area {
+    justify-content: center !important;
+  }
 }
 @media only screen and (max-width: 767px) {
   .tau-search-item {

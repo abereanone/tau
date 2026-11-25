@@ -134,7 +134,9 @@ def clean_body(post, slug, upload_dir, dry):
             el.attrs.pop(attr, None)
     body = "\n\n".join(str(el) for el in soup.contents if str(el).strip())
     sub = (post.get("subtitle") or "").strip()
-    if sub:
+    norm = lambda t: re.sub(r"\W+", " ", t).strip().lower()
+    first = next((el.get_text(" ", strip=True) for el in soup.find_all(True) if el.get_text(strip=True)), "")
+    if sub and norm(first) != norm(sub):  # some posts already open with the subtitle
         body = f"<p><em>{htmllib.escape(sub, quote=False)}</em></p>\n\n" + body
     return body
 
